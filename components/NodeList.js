@@ -1,19 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { List, ListItem } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import Node from "./Node";
 
 const NodeList = (props) => {
   return (
-    <List>
+    <Flex flexDir="column">
       <Node depth={0} />
-      <Node depth={1} />
-      <Node depth={1} />
-      <Node depth={1} />
-      <Node depth={2} />
-      <Node depth={3} />
-      <Node depth={3} />
-    </List>
+      <Node depth={0} />
+      <Node depth={0} />
+    </Flex>
   );
 };
 

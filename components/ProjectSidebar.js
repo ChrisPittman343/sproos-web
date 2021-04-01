@@ -8,9 +8,10 @@ import ProjectDetails from "./ProjectDetails";
 const ProjectSidebar = (props) => {
   return (
     <Box
-      minW={256}
+      minWidth={288}
+      maxWidth={288}
+      w={288}
       h="100%"
-      bg="gray.700"
       borderRight={2}
       borderRightStyle="solid"
       borderRightColor="gray.900"

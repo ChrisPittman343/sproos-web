@@ -2,60 +2,81 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
+  Collapse,
   Flex,
   IconButton,
   Input,
-  ListIcon,
-  ListItem,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { TriangleDownIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
+import NodeOptions from "./NodeOptions";
 
 const Node = (props) => {
   const [name, setName] = useState("Node");
-  const [focused, setFocused] = useState(false);
+  const [editable, setEditable] = useState(false);
+  const { isOpen, onToggle } = useDisclosure();
 
-  console.log(props.depth);
+  const isReadonly = () => {
+    return !editable;
+  };
 
   const onChange = (e) => {
-    if (focused) setName(e.target.value);
+    if (editable) setName(e.target.value);
     else return;
   };
 
   const onDoubleClick = (e) => {
-    setFocused(true);
+    setEditable(true);
     e.target.focus();
+    e.target.setSelectionRange(0, e.target.value.length);
+  };
+
+  const onContextMenu = (e) => {
+    e.stopPropagation();
+    window.event.returnValue = false;
   };
 
   return (
-    <ListItem bg="gray.800" cursor="pointer" _hover={{ bg: "gray.700" }} px={1}>
-      <Flex alignItems="center">
-        <Box w={2 + 3 * props.depth} h={0.25} bg="gray.600" />
+    <Box onContextMenu={onContextMenu}>
+      <Flex
+        alignItems="center"
+        justifyContent="flex-start"
+        cursor="pointer"
+        _hover={{ bg: "gray.700" }}
+      >
+        <Box w={props.depth * 30 + "px"} h={0.25} bg="gray.600" opacity={0.5} />
         <IconButton
           _focus={{ outline: "none" }}
-          icon={<TriangleDownIcon />}
-          variant="unstyled"
+          icon={isOpen ? <ChevronUpIcon mt={1} /> : <ChevronDownIcon mt={1} />}
+          rounded={false}
+          variant="ghost"
           size="sm"
           pb={1}
+          onClick={onToggle}
         />
-        <ListIcon color="green.400" pb={0} />
         <Input
+          ml={1}
           cursor="pointer"
           aria-label="Node Name"
           variant="unstyled"
           placeholder="Node Name"
-          isReadOnly={!focused}
+          isReadOnly={isReadonly()}
           value={name}
           rounded={false}
           isTruncated
           spellCheck={false}
-          _focus={{ bg: focused ? "gray.900" : "" }}
+          _focus={{ bg: !isReadonly() ? "gray.900" : "" }}
           onChange={onChange}
           onDoubleClick={onDoubleClick}
-          onBlur={() => setFocused(false)}
+          onBlur={() => setEditable(false)}
         />
+        <NodeOptions />
       </Flex>
-    </ListItem>
+      <Collapse in={isOpen}>
+        {props.depth <= 10 ? <Node depth={props.depth + 1} /> : <> </>}
+      </Collapse>
+    </Box>
   );
 };
 

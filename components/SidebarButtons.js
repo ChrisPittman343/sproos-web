@@ -16,10 +16,11 @@ const SidebarButtons = (props) => {
       borderY="2px"
       borderStyle="solid"
       borderColor="gray.900"
+      bg="gray.900"
     >
       <SidebarButton
         icon={<PlusSquareIcon w={6} h={6} />}
-        desc="Add node"
+        desc="Add root node"
         onClick={(e) => console.log(e)}
       />
       <SidebarButton

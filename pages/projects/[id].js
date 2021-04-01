@@ -10,7 +10,7 @@ const Project = () => {
   const { id } = router.query;
 
   return (
-    <Box>
+    <Box h="100%">
       <Navbar />
       <Flex direction="row" h="100%">
         <ProjectSidebar />

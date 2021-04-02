@@ -1,8 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Flex } from "@chakra-ui/react";
+import {
+  Avatar,
+  Button,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/react";
 import Title from "./Title";
 import { useRouter } from "next/router";
+import GoogleAvatar from "./GoogleAvatar";
 
 const Navbar = (props) => {
   const router = useRouter();
@@ -16,7 +25,7 @@ const Navbar = (props) => {
       justifyContent="space-between"
     >
       <Title />
-      <Flex gridColumnGap={2}>
+      <Flex gridColumnGap={5} alignItems="center" pr={5}>
         <Button
           onClick={(e) => {
             router.push("/projects");
@@ -25,14 +34,7 @@ const Navbar = (props) => {
         >
           Projects
         </Button>
-        <Button
-          onClick={(e) => {
-            router.push("/");
-          }}
-          variant="ghost"
-        >
-          Account
-        </Button>
+        <GoogleAvatar />
       </Flex>
     </Flex>
   );

@@ -4,7 +4,7 @@ import React from "react";
 const Footer = () => {
   return (
     <Flex>
-      <Link>Github</Link>
+      <Link href="https://github.com/ChrisPittman343/sproos-web">Github</Link>
       <Link>About</Link>
     </Flex>
   );

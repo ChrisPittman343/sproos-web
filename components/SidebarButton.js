@@ -16,7 +16,6 @@ const SidebarButton = (props) => {
         colorScheme="white"
         variant="ghost"
         rounded={false}
-        size="sm"
         onClick={props.onClick}
       />
     </Tooltip>

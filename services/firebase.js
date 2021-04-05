@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
-import "firebase/firestore";
+import "firebase/database";
 import "firebase/functions";
 
 // const firebaseConfig = {
@@ -27,6 +27,6 @@ firebase.apps.length === 0
   ? firebase.initializeApp(firebaseConfig)
   : firebase.app();
 
-export var auth = firebase.auth();
-export var db = firebase.firestore();
-export var functions = firebase.functions();
+export const auth = firebase.auth();
+export const db = firebase.database();
+export const functions = firebase.functions();

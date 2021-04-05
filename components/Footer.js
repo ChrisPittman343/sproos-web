@@ -3,9 +3,8 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <Flex>
+    <Flex as="footer" w="100%" justifyContent="center" gridColumnGap={5}>
       <Link href="https://github.com/ChrisPittman343/sproos-web">Github</Link>
-      <Link>About</Link>
     </Flex>
   );
 };

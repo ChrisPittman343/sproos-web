@@ -43,6 +43,7 @@ const Node = (props) => {
         alignItems="center"
         justifyContent="flex-start"
         cursor="pointer"
+        bg={isReadonly() ? "gray.800" : "gray.700"}
         _hover={{ bg: "gray.700" }}
       >
         <Box w={props.depth * 30 + "px"} h={0.25} bg="gray.600" opacity={0.5} />
@@ -66,7 +67,12 @@ const Node = (props) => {
           rounded={false}
           isTruncated
           spellCheck={false}
-          _focus={{ bg: !isReadonly() ? "gray.900" : "" }}
+          outline="0 solid gray"
+          outlineColor="gray.500"
+          _focus={{
+            bg: isReadonly() ? "" : "gray.900",
+            outlineWidth: isReadonly() ? "0" : "1px",
+          }}
           onChange={onChange}
           onDoubleClick={onDoubleClick}
           onBlur={() => setEditable(false)}

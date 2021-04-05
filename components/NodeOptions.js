@@ -21,6 +21,9 @@ const NodeOptions = (props) => {
         }
         variant="ghost"
         size="sm"
+        _focus={{
+          outline: "none",
+        }}
       />
       <MenuList>
         <MenuItem>Add Child</MenuItem>

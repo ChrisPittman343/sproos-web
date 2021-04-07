@@ -24,6 +24,7 @@ const GoogleAvatar = (props) => {
         <>
           <MenuButton
             as={Avatar}
+            bg="transparent"
             size="sm"
             _hover={{ cursor: "pointer" }}
             name={user.displayName}

@@ -20,3 +20,5 @@ firebase.apps.length === 0
 export const auth = firebase.auth();
 export const db = firebase.database();
 export const functions = firebase.functions();
+
+functions.useEmulator("localhost", 5001);

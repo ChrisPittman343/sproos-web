@@ -12,7 +12,7 @@ import { GoKebabVertical } from "react-icons/go";
 
 const NodeOptions = (props) => {
   return (
-    <Menu offset={[0, -5]}>
+    <Menu offset={[0, -5]} isLazy>
       <MenuButton
         as={IconButton}
         rounded={false}

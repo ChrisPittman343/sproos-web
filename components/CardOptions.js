@@ -11,33 +11,56 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { GoKebabVertical } from "react-icons/go";
+import EditProjectDetails from "./EditProjectDetails";
+import { deleteProject } from "../services/databaseWrites";
 
 const CardOptions = (props) => {
+  const disc = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const openEdit = (e) => {
+    e.preventDefault();
+    onOpen();
+  };
+
+  const onDelete = async (e) => {
+    e.preventDefault();
+    deleteProject(props.project).catch((err) => {
+      console.log(err);
+    });
+  };
+
   return (
-    <Menu isOpen={isOpen} onClose={onClose}>
-      <MenuButton
-        as={IconButton}
-        icon={<Icon as={GoKebabVertical} _selected={{ outline: 0 }} />}
-        variant="ghost"
-        size="sm"
-        onClick={(e) => {
-          e.preventDefault();
-          isOpen ? onClose() : onOpen();
-        }}
+    <>
+      <Menu isOpen={disc.isOpen} onClose={disc.onClose} isLazy>
+        <MenuButton
+          as={IconButton}
+          icon={<Icon as={GoKebabVertical} _selected={{ outline: 0 }} />}
+          variant="ghost"
+          size="sm"
+          onClick={(e) => {
+            e.preventDefault();
+            disc.isOpen ? disc.onClose() : disc.onOpen();
+          }}
+        />
+        <Portal>
+          <MenuList>
+            <MenuItem onClick={openEdit}>Edit</MenuItem>
+            <MenuItem onClick={onDelete}>Delete</MenuItem>
+          </MenuList>
+        </Portal>
+      </Menu>
+      <EditProjectDetails
+        project={props.project}
+        isOpen={isOpen}
+        onClose={onClose}
       />
-      <Portal>
-        <MenuList>
-          <MenuItem>Edit</MenuItem>
-          <MenuItem>Make Template</MenuItem>
-          <MenuItem>Delete</MenuItem>
-        </MenuList>
-      </Portal>
-    </Menu>
+    </>
   );
 };
 
-CardOptions.propTypes = {};
+CardOptions.propTypes = {
+  project: PropTypes.object,
+};
 
 export default CardOptions;

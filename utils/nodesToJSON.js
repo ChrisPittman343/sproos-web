@@ -1,7 +1,6 @@
 const nodeInput = {
   id: "",
   text: "",
-  
 };
 
 /**
@@ -10,7 +9,7 @@ const nodeInput = {
  * @param {Array} nodes
  * @returns JSON tree of reparented nodes like so - node_id: {node, children: []}
  */
-export function nodesToJSON(nodes) {
+export function nodesToJson(nodes) {
   const tree = {};
   // Iterate over every node in the tree
   nodes.forEach((node) => {

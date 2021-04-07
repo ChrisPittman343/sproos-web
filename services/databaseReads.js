@@ -1,35 +1,56 @@
 import { auth, db } from "./firebase";
+import { jsonToArray } from "../utils/jsonToArray.js";
 
 /**
- * Gets a few recent  projects for the user to display on the projects page.
- * Further requests for more projects should be done separately.
- * @returns <= 7 of the most recently edited projects from the user.
+ * Attaches a listener to a user's projects, updating them when they change by
+ * passing the new data to the setProjects function.
+ * @param user firebase user or null
+ * @param {(data: Array) => void} setProjects function for setting project data.
+ * @param {(error: {name: String, message: String} | null) => void} setError function for setting errors. Will only run when an error occurs.
+ * @returns {null | () => void} A cleanup function for removing all listeners from the projects.
  */
-export async function getRecentProjects() {
-  console.log("--------- User does NOT exist!");
-  const projects = [];
-  const user = auth.currentUser;
-  if (!user) throw Error("No user logged in.");
-  console.log("--------- User exists!");
+export async function listenToProjects(user, setProjects, setError) {
+  if (!user) {
+    setProjects([]);
+    setError({
+      name: "No User",
+      message: "A user must be present to fetch projects.",
+    });
+    return () => {};
+  }
 
-  db.ref("projects")
-    .orderByChild("uid")
-    .equalTo(user.uid)
-    .get()
-    .then((res) => {
-      if (res.exists) projects = res.val();
-    })
-    .catch((e) => console.log(e));
-  console.log("Projects:", projects);
-  return projects;
+  const projects = db.ref("projects").orderByChild("uid").equalTo(user.uid);
+  setError(null);
+  projects.on(
+    "value",
+    (snap) => {
+      setProjects(jsonToArray(snap.val()));
+    },
+    (error) => {
+      setError({ ...error });
+    }
+  );
+  return () => projects.off();
 }
 
 /**
- *
- * @param {String} id
- * @returns nodes[] (unsorted)
+ * Gets all project details for the user to display on the projects page.
+ * Returns null if there was an error fetching the projects.
+ * @returns {Promise<{id: String, name: String, description: String}[]?>} projects
  */
-export async function getProject(id) {
+export async function getProjectsOnce() {
   const user = auth.currentUser;
-  if (!user) throw Error("No user logged in.");
+  try {
+    if (!user) throw Error("No user!");
+    const snap = await db
+      .ref("projects")
+      .orderByChild("uid")
+      .equalTo(user.uid)
+      .get();
+    if (snap.exists()) return jsonToArray(snap.val());
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+  return [];
 }

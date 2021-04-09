@@ -7,7 +7,7 @@ import { useProjects } from "../../hooks/useProjects.js";
 
 const ProjectsPage = (props) => {
   const { projects, error } = useProjects();
-
+  console.log(error);
   return (
     <Box minH="100vh" bg="gray.800">
       <Navbar />
@@ -19,7 +19,7 @@ const ProjectsPage = (props) => {
         minWidth="container.md"
         m="auto"
       >
-        <MyProjects projects={projects} />
+        {error ? <></> : <MyProjects projects={projects} />}
       </Flex>
       <Footer />
     </Box>

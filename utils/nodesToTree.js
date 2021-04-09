@@ -1,15 +1,17 @@
 const nodeInput = {
-  id: "",
-  text: "",
+  id: String,
+  projectId: String,
+  parentId: String | null, //null => top level node
+  text: String,
 };
 
 /**
  * Constructs a sorted JSON tree of nodes from an
  * array of unsorted nodes.
- * @param {Array} nodes
- * @returns JSON tree of reparented nodes like so - node_id: {node, children: []}
+ * @param {{parentId: String?}[]} nodes
+ * @returns JSON tree of reparented nodes
  */
-export function nodesToJson(nodes) {
+export function nodesToTree(nodes) {
   const tree = {};
   // Iterate over every node in the tree
   nodes.forEach((node) => {

@@ -17,6 +17,7 @@ firebase.apps.length === 0
   ? firebase.initializeApp(firebaseConfig)
   : firebase.app();
 
+export const fb = firebase;
 export const auth = firebase.auth();
 export const db = firebase.database();
 export const functions = firebase.functions();

@@ -29,13 +29,10 @@ const MyProjects = (props) => {
     // The user has no projects.
   } else if (props.projects.length === 0) {
     projectBody = (
-      <Center>
-        <Spinner size="xl" />
-      </Center>
-      // <Box>
-      //   It's looking a little empty in here... <br />
-      //   Why don't you try creating a new project?
-      // </Box>
+      <Box>
+        It's looking a little empty in here... <br />
+        Why don't you try creating a new project?
+      </Box>
     );
 
     // Projects are present.

@@ -3,6 +3,12 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { listenToProjects } from "../services/databaseReads";
 import { auth } from "../services/firebase";
 
+/**
+ * A hook for the projects page, rerenders the page if a user's projects change.
+ * Updates when the user state changes, and handles the removal of listeners
+ * to the database when necessary.
+ * @returns {{projects: {id: String, uid: String, name: String, description: String}[], error: {name: String, message: String}}} project and error data
+ */
 export function useProjects() {
   const [user] = useAuthState(auth);
 

@@ -1,4 +1,4 @@
-import { auth, db } from "./firebase";
+import { auth, db, fb } from "./firebase";
 
 /**
  * Updates a project's details if an ID is present, otherwise creates a new project.
@@ -9,6 +9,7 @@ export async function editProjectDetails(id = null, projDetails) {
   const user = auth.currentUser;
   if (!user) throw Error("No user!");
   const newData = {
+    lastEdited: fb.database.ServerValue.TIMESTAMP,
     uid: user.uid,
     ...projDetails,
   };

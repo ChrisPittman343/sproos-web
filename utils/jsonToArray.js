@@ -1,8 +1,8 @@
 /**
  * Converts a JSON Object into an array of first-child keys,
  * with an additional key of "id" as the key name.
- * @param {JSON} json
- * @returns {JSON[]} an array of json objects
+ * @param {object} json
+ * @returns {object[]} an array of json objects
  */
 export function jsonToArray(json) {
   const arr = [];
